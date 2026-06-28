@@ -1,21 +1,26 @@
+import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 
 export default function MainLayout({ children }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <div className="flex bg-[#0D0D0D] text-white min-h-screen">
 
-      {/* Sidebar */}
-      <div className="hidden md:block">
-        <Sidebar />
-      </div>
+      {/* Sidebar — recibe estado y función para cerrar */}
+      <Sidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
 
-      {/* Main */}
-      <div className="flex-1 flex flex-col">
+      {/* Contenido principal */}
+      <div className="flex-1 flex flex-col min-w-0">
 
-        <Navbar />
+        {/* Navbar — recibe función para abrir sidebar */}
+        <Navbar onMenuOpen={() => setSidebarOpen(true)} />
 
-        <main className="w-full p-3 md:p-6 overflow-x-hidden">
+        <main className="w-full p-4 md:p-6 overflow-x-hidden">
           {children}
         </main>
 
